@@ -1,3 +1,3 @@
-const sayHello = require("./ejercicio3");
+import sayHello from "./ejercicio4.mjs";
 const nombre = "Carlos";
 sayHello(nombre);
