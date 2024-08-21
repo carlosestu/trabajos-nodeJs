@@ -13,6 +13,11 @@ app.use(morgan('dev'));
 app.get('/planets', (req: Request, res: Response) => {
   res.json(planets);
 });
+app.get('/planets/:id', (req: Request, res: Response) => {
+  const {id} = req.params;
+  const planet = planets.find((p) => p.id === Number(id));
+  res.json(planet);
+});
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!');
 });
