@@ -52,13 +52,13 @@ export interface Planet {
   const planetaSchema = Joi.object({
     id: Joi.number().integer().required().custom((value, helpers) => {
       if (planetas.some(planet => planet.id === value)) {
-        return helpers.message('id ya existente');
+        return helpers.message({custom: 'error, id ya existente'});
       }
       return value;
     }, 'unique id validation'),
     name: Joi.string().required().custom((value, helpers) => {
       if (planetas.some(planet => planet.name === value)) {
-        return helpers.message('nombre ya existente');
+        return helpers.message({custom: 'error, nombre ya existente'});
       }
       return value;
     }, 'unique name validation'),
