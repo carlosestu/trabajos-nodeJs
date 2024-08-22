@@ -1,4 +1,5 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
+import Joi, { object } from 'joi';
 export interface Planet {
     id: number;
     name: string;
@@ -48,11 +49,30 @@ export interface Planet {
     const planet = planets.find((p) => p.id === Number(id));
     res.status(200).json(planet);
   };
- export const create = (req: Request, res: Response): void => {
+  const planetaSchema = Joi.object({
+    id: Joi.number().integer().required().custom((value, helpers) => {
+      if (planetas.some(planet => planet.id === value)) {
+        return helpers.message('id ya existente');
+      }
+      return value;
+    }, 'unique id validation'),
+    name: Joi.string().required().custom((value, helpers) => {
+      if (planetas.some(planet => planet.name === value)) {
+        return helpers.message('nombre ya existente');
+      }
+      return value;
+    }, 'unique name validation'),
+  })
+ export const create = (req: Request, res: Response) => {
     const {id, name} = req.body;
     const newPlanet = {id, name};
-   planetas = [...planetas, newPlanet];
-   res.status(201).json({msg: "the planet was created", planets: planetas});
+    const validatedNewPlanet = planetaSchema.validate(newPlanet);
+    if (validatedNewPlanet.error) {
+      return res.status(404).json({msg: validatedNewPlanet.error.details[0].message})
+    } else {
+      planetas = [...planetas, newPlanet];
+      res.status(201).json({msg: "the planet was created", planets: planetas});
+    }
   };
  export const updateById = (req: Request, res: Response): void => {
     const {id} = req.params;
