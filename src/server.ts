@@ -2,7 +2,8 @@ import express, { Express, Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
-import { planets, getAll, getOneById, create, updateById, deleteById } from './controllers/planets'; 
+import { getAll, getOneById, create, updateById, deleteById } from './controllers/planets'; 
+
 dotenv.config();
 const app: Express = express();
 const port: number = Number(process.env.PORT ?? 3000);
