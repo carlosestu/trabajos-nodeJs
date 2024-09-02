@@ -1,0 +1,55 @@
+# Dependencias
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Archivos de entorno
+.env
+.env.local
+.env.*.local
+
+# Archivos de construcción
+/dist
+/build
+
+# Logs
+logs
+*.log
+
+# Directorios de caché
+.cache/
+.npm/
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Directorios y archivos de IDE/editores
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+# Archivos de cobertura de pruebas
+coverage/
+
+# Archivos temporales
+tmp/
+temp/
+
+# Archivos de configuración personal
+.npmrc
+.yarnrc
+
+# Otros
+*.pid
+*.seed
+*.pid.lock
+
+# Archivos específicos del proyecto (añade los que necesites)
+# config.js
+# secrets.json
