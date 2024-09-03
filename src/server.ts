@@ -6,7 +6,8 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 import { getAll, getOneById, create, updateById, deleteById, createImage } from './controllers/planets'; 
-import { getAllUsers } from './controllers/users'; 
+import { getAllUsers, logIn, signUp } from './controllers/users'; 
+import passport from './passport';
 
 dotenv.config();
 const uploadDir = path.join(__dirname, 'uploads');
@@ -28,13 +29,15 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 app.get('/api/planets', getAll)
-app.get('/api/users', getAllUsers)
+app.get('/api/users',passport.authenticate('jwt', { session: false }), getAllUsers)
 app.get('/api/planets/:id', getOneById)
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!');
 });
 app.post('/api/planets', create)
 app.post('/api/planets/:id/image', upload.single("image"), createImage)
+app.post('/api/users/login', logIn)
+app.post('/api/users/signup', signUp)
 app.put('/api/planets/:id', updateById)
 app.delete('/api/planets/:id', deleteById)
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
